@@ -18,7 +18,7 @@ func VerifyPassword(c *gin.Context) {
 	}
 
 	verify := true
-	failedRules := services.ValidatePassword(bodyRequest)
+	failedRules := services.PasswordValidator.ValidatePassword(bodyRequest)
 	if len(failedRules) > 0 {
 		verify = false
 	}

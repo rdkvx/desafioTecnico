@@ -5,7 +5,21 @@ import (
 	"github.com/rdkvx/desafioTecnico/v2/utils"
 )
 
-func ValidatePassword(bodyRequest models.ValidatePassword) ([]string) {
+type IpasswordValidator interface{
+	ValidatePassword(bodyRequest models.ValidatePassword) ([]string)
+}
+
+type Validator struct{
+
+}
+
+var PasswordValidator IpasswordValidator
+
+func NewPasswordValidator() IpasswordValidator{
+	return &Validator{}
+}
+
+func (vp *Validator) ValidatePassword(bodyRequest models.ValidatePassword) ([]string) {
 
 	failedRules := []string{}
 

@@ -10,6 +10,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/rdkvx/desafioTecnico/v2/routes"
+	"github.com/rdkvx/desafioTecnico/v2/services"
 	"github.com/rdkvx/desafioTecnico/v2/utils"
 )
 
@@ -24,9 +25,6 @@ func main() {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
-		AllowMethods: cors.DefaultConfig().AllowMethods,
-		AllowHeaders: cors.DefaultConfig().AllowHeaders,
-		MaxAge:       12 * time.Hour,
 	}))
 
 	routes.AddRoutes(router)
@@ -36,8 +34,15 @@ func main() {
 		Handler: router,
 	}
 
-	// iniciando o servidor da API
+	// starting the validator interface
+	services.PasswordValidator = services.NewPasswordValidator()
+	
 	fmt.Printf(utils.ApiStartMsg, utils.HttpPort)
+
+	//skip a line
+	fmt.Println()
+
+	// starting API server
 	if err = server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		fmt.Errorf(utils.ApiStartErr, err)
 		os.Exit(1)
