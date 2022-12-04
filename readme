@@ -1,0 +1,33 @@
+para rodar a API, basta utilizar o comando "make run" no console e então fazer a requisição pelo postman, insomnia ou outro software
+de preferencia no endereco "localhost:8080/verify".
+
+Ou se preferir, pode usar o comando "run main.go" caso prefira rodar de forma mais "manual"
+
+Segue um exemplo de payload
+
+{
+    "password" : "abaA1#!",
+    "rules" : [
+        {
+            "rule" : "minSize", "value" : 2
+        },
+        {
+            "rule" : "minLowercase", "value" : 2
+        },
+        {
+            "rule" : "minUppercase", "value" : 1
+        },
+        {
+            "rule" : "minDigit", "value" : 1
+        },
+        {
+            "rule" : "minSpecialChars", "value" : 2
+        },
+        {
+            "rule" : "noRepeated", "value": 0
+        }
+    ]
+}
+
+Mesmo não sendo obrigatório, decidi deixar o parametro value configurável para a regra "noRepeated", 
+caso queira o valor padrão (nenhum caracter repetido em sequencia), basta deixar o valor como 0, porém ele irá respeitar a regra imposta caso o valor seja alterado.

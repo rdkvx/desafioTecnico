@@ -32,7 +32,7 @@ func (vp *Validator) ValidatePassword(bodyRequest models.ValidatePassword) ([]st
 			if err := utils.ValidateMinLowercase(bodyRequest.Password, rule.Value); err != nil {
 				failedRules = append(failedRules, utils.MinLowercase)
 			}
-
+		
 		case utils.MinUppercase:
 			if err := utils.ValidateMinUppercase(bodyRequest.Password, rule.Value); err != nil {
 				failedRules = append(failedRules, utils.MinUppercase)

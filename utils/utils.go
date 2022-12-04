@@ -5,6 +5,7 @@ import (
 	"unicode"
 )
 
+// check if the total of caracters is valid based on rule value
 func ValidateMinSize(password string, ruleValue int) error {
 	var err error
 
@@ -15,6 +16,7 @@ func ValidateMinSize(password string, ruleValue int) error {
 	return err
 }
 
+// check if the total of lowercase caracters is valid based on rule value
 func ValidateMinLowercase(password string, ruleValue int) error {
 	var minLowercaseErr int
 	var err error
@@ -32,6 +34,7 @@ func ValidateMinLowercase(password string, ruleValue int) error {
 	return err
 }
 
+// check if the total of uppercase caracters is valid based on rule value
 func ValidateMinUppercase(password string, ruleValue int) error {
 	var minUppercaseErr int
 	var err error
@@ -49,6 +52,7 @@ func ValidateMinUppercase(password string, ruleValue int) error {
 	return err
 }
 
+// check if the total of number caracters is valid based on rule value
 func ValidateMinDigit(password string, ruleValue int) error{
 	var minDigitOk int
 	var err error
@@ -66,6 +70,7 @@ func ValidateMinDigit(password string, ruleValue int) error{
 	return err
 }
 
+// check if the total of special caracters is valid based on rule value
 func ValidateMinSpecialChars(password string, ruleValue int) error{
 	var specialCharsOk int
 	var err error
@@ -83,6 +88,7 @@ func ValidateMinSpecialChars(password string, ruleValue int) error{
 	return err
 }
 
+// check if the total of repeated caracters is valid based on rule value
 func ValidateNoRepeated(password string, ruleValue int) error{
 	var noRepeatedErr int
 	var lastChar rune
