@@ -9,9 +9,7 @@ type IpasswordValidator interface{
 	ValidatePassword(bodyRequest models.ValidatePassword) ([]string)
 }
 
-type Validator struct{
-
-}
+type Validator struct{}
 
 var PasswordValidator IpasswordValidator
 
