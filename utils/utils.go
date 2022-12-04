@@ -1,48 +1,107 @@
 package utils
 
-import "fmt"
+import (
+	"errors"
+	"unicode"
+)
 
-func GetString(data map[string]interface{}, key string) (string, error) {
-	dataRaw, ok := data[key]
-	if !ok {
-		return "", fmt.Errorf("%v field is required", key)
+func ValidateMinSize(password string, ruleValue int) error {
+	var err error
+
+	if len(password) < ruleValue {
+		err = errors.New(MinSize)
 	}
 
-	dataString, ok := dataRaw.(string)
-	if !ok {
-		return "", fmt.Errorf("%v field type must be a string", key)
-	}
-
-	return dataString, nil
+	return err
 }
 
-func GetFloat(data map[string]interface{}, key string) (float64, error) {
-	dataRaw, ok := data[key]
-	if !ok {
-		return 0.0, fmt.Errorf("%v field is required", key)
+func ValidateMinLowercase(password string, ruleValue int) error {
+	var minLowercaseErr int
+	var err error
+
+	for _, r := range password {
+		if unicode.IsLower(r) {
+			minLowercaseErr++
+		}
 	}
 
-	dataFloat, ok := dataRaw.(float64)
-	if !ok {
-		return 0.0, fmt.Errorf("%v field type must be a float", key)
+	if minLowercaseErr < ruleValue {
+		err = errors.New(MinLowercase)
 	}
 
-	return dataFloat, nil
+	return err
 }
 
-/* func GetFloatInterface(data interface{}, key string) (float64, error) {
-	data[]
-	
-	dataRaw, ok := data[key]
-	if !ok {
-		return 0.0, fmt.Errorf("%v field is required", key)
+func ValidateMinUppercase(password string, ruleValue int) error {
+	var minUppercaseErr int
+	var err error
+
+	for _, r := range password {
+		if unicode.IsUpper(r) {
+			minUppercaseErr++
+		}
 	}
 
-	dataFloat, ok := dataRaw.(float64)
-	if !ok {
-		return 0.0, fmt.Errorf("%v field type must be a float", key)
+	if minUppercaseErr < ruleValue {
+		err = errors.New(MinUppercase)
 	}
 
-	return dataFloat, nil
-} */
+	return err
+}
 
+func ValidateMinDigit(password string, ruleValue int) error{
+	var minDigitOk int
+	var err error
+
+	for _, r := range password {
+		if (r > 47) && (r < 58) {
+			minDigitOk++
+		}
+	}
+
+	if minDigitOk < ruleValue {
+		err = errors.New(MinDigit)
+	}
+
+	return err
+}
+
+func ValidateMinSpecialChars(password string, ruleValue int) error{
+	var specialCharsOk int
+	var err error
+
+	for _, r := range password {
+		if ((r > 31) && (r < 48)) || ((r > 57) && (r < 65)) || ((r > 90) && (r < 97)) || ((r > 122) && (r < 126)) {
+			specialCharsOk++
+		}
+	}
+
+	if specialCharsOk < ruleValue {
+		err = errors.New(MinSpecialChars)
+	}
+
+	return err
+}
+
+func ValidateNoRepeated(password string, ruleValue int) error{
+	var noRepeatedErr int
+	var lastChar rune
+	var err error
+
+	for _, r := range password {
+		if r == lastChar {
+			noRepeatedErr++
+		}
+		lastChar = r
+	}
+
+	if noRepeatedErr > 0 {
+		noRepeatedErr++
+	}
+
+	if noRepeatedErr > ruleValue {
+		err = errors.New(NoRepeated)
+	}
+
+	return err
+}

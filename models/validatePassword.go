@@ -1,4 +1,4 @@
-package model
+package models
 
 type ValidatePassword struct {
 	Password string `json:"password"`

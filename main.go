@@ -10,6 +10,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/rdkvx/desafioTecnico/v2/routes"
+	"github.com/rdkvx/desafioTecnico/v2/utils"
 )
 
 var (
@@ -30,26 +31,15 @@ func main() {
 
 	routes.AddRoutes(router)
 
-	httpPort := ":8080"
-
 	server := &http.Server{
-		Addr:    httpPort,
+		Addr:    utils.HttpPort,
 		Handler: router,
 	}
-/* 
-	go func() {
-		fmt.Printf("API sendo ouvida na porta %s", httpPort)
-		if err = server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			fmt.Errorf("nao foi possivel iniciar o servidor: %v", err)
-			os.Exit(1)
-		}
-	}() */
 
-
-	// iniciando o servidor da API	
-	fmt.Printf("API sendo ouvida na porta %s", httpPort)
+	// iniciando o servidor da API
+	fmt.Printf(utils.ApiStartMsg, utils.HttpPort)
 	if err = server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		fmt.Errorf("nao foi possivel iniciar o servidor: %v", err)
+		fmt.Errorf(utils.ApiStartErr, err)
 		os.Exit(1)
 	}
 
@@ -57,9 +47,9 @@ func main() {
 	defer cancel()
 
 	if err := server.Shutdown(ctx); err != nil {
-		fmt.Errorf("o servidor foi forçado a parar %s", err)
+		fmt.Errorf(utils.ApiForcedShutdown, err)
 		os.Exit(1)
 	}
 
-	fmt.Println("servidor parado com sucesso")
+	fmt.Println(utils.APIStopped)
 }

@@ -1,91 +1,47 @@
 package services
 
 import (
-	"unicode"
-
-	"github.com/rdkvx/desafioTecnico/v2/model"
+	"github.com/rdkvx/desafioTecnico/v2/models"
+	"github.com/rdkvx/desafioTecnico/v2/utils"
 )
 
-func ValidatePassword(bodyRequest model.ValidatePassword) (failedRules []string) {
+func ValidatePassword(bodyRequest models.ValidatePassword) ([]string) {
+
+	failedRules := []string{}
 
 	for _, rule := range bodyRequest.Rules {
 		switch rule.Rule {
-		case "minSize":
-			if len(bodyRequest.Password) < rule.Value {
-				failedRules = append(failedRules, "minSize")
+		case utils.MinSize:
+			if err := utils.ValidateMinSize(bodyRequest.Password, rule.Value); err != nil {
+				failedRules = append(failedRules, utils.MinSize)
 			}
 
-		case "minLowercase":
-			minLowercaseErr := 0
-
-			for _, r := range bodyRequest.Password {
-				if unicode.IsLower(r) {
-					minLowercaseErr++
-				}
+		case utils.MinLowercase:
+			if err := utils.ValidateMinLowercase(bodyRequest.Password, rule.Value); err != nil {
+				failedRules = append(failedRules, utils.MinLowercase)
 			}
 
-			if minLowercaseErr < rule.Value {
-				failedRules = append(failedRules, "minLowercase")
+		case utils.MinUppercase:
+			if err := utils.ValidateMinUppercase(bodyRequest.Password, rule.Value); err != nil {
+				failedRules = append(failedRules, utils.MinUppercase)
 			}
 
-		case "minUppercase":
-			minUppercaseErr := 0
-
-			for _, r := range bodyRequest.Password {
-				if unicode.IsUpper(r) {
-					minUppercaseErr++
-				}
+		case utils.MinDigit:
+			if err := utils.ValidateMinDigit(bodyRequest.Password, rule.Value); err != nil {
+				failedRules = append(failedRules, utils.MinDigit)
 			}
 
-			if minUppercaseErr < rule.Value {
-				failedRules = append(failedRules, "minUppercase")
+		case utils.MinSpecialChars:
+			if err := utils.ValidateMinSpecialChars(bodyRequest.Password, rule.Value); err != nil {
+				failedRules = append(failedRules, utils.MinSpecialChars)
 			}
 
-		case "minDigit":
-			minDigitOk := 0
-
-			for _, r := range bodyRequest.Password {
-				if (r > 47) && (r < 58) {
-					minDigitOk++
-				}
-			}
-
-			if minDigitOk < rule.Value {
-				failedRules = append(failedRules, "minDigit")
-			}
-
-		case "minSpecialChars":
-			specialCharsOk := 0
-			
-			for _, r := range bodyRequest.Password {
-				if ((r > 31) && (r < 48)) || ((r > 57) && (r < 65)) || ((r > 90) && (r < 97)) || ((r > 122) && (r < 126)) {
-					specialCharsOk++
-				}
-			}
-
-			if specialCharsOk < rule.Value {
-				failedRules = append(failedRules, "minSpecialChars")
-			}
-
-		case "noRepeated":
-			noRepeatedErr := 0
-			var lastChar rune
-			for _, r := range bodyRequest.Password {
-				if r == lastChar {
-					noRepeatedErr++
-				}
-				lastChar = r
-			}
-
-			if noRepeatedErr > 0 {
-				noRepeatedErr++
-			}
-
-			if noRepeatedErr > rule.Value {
-				failedRules = append(failedRules, "noRepeated")
+		case utils.NoRepeated:
+			if err := utils.ValidateNoRepeated(bodyRequest.Password, rule.Value); err != nil {
+				failedRules = append(failedRules, utils.NoRepeated)
 			}
 		}
 	}
 
-	return
+	return failedRules
 }
