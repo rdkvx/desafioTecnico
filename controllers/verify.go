@@ -18,12 +18,14 @@ func VerifyPassword(c *gin.Context) {
 	}
 
 	verify := true
-	if err := services.ValidatePassword(bodyRequest); err != nil {
+	failedRules := services.ValidatePassword(bodyRequest)
+	if len(failedRules) > 0 {
 		verify = false
 	}
 	
 
 	utils.SendJSONResponse(c, http.StatusCreated, gin.H{
 		"verify": verify,
+		"noMatch" : failedRules,
 	})
 }
