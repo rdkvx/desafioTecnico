@@ -1,14 +1,11 @@
 package services
 
 import (
-	"regexp"
 	"unicode"
 
 	"github.com/rdkvx/desafioTecnico/v2/model"
-	//"github.com/rdkvx/desafioTecnico/v2/utils"
 )
 
-//func ValidatePassword(bodyRequest map[string]interface{}) error {
 func ValidatePassword(bodyRequest model.ValidatePassword) (failedRules []string) {
 
 	for _, rule := range bodyRequest.Rules {
@@ -45,60 +42,50 @@ func ValidatePassword(bodyRequest model.ValidatePassword) (failedRules []string)
 			}
 
 		case "minDigit":
-			minDigitErr := 0
+			minDigitOk := 0
 
-			re := regexp.MustCompile(`[-]?\d[\d,]*[\.]?[\d{2}]*`)
-			subMatchAll := re.FindAllString(bodyRequest.Password, -1)
-			for range subMatchAll {
-				minDigitErr++
+			for _, r := range bodyRequest.Password {
+				if (r > 47) && (r < 58) {
+					minDigitOk++
+				}
 			}
 
-			if minDigitErr < rule.Value {
+			if minDigitOk < rule.Value {
 				failedRules = append(failedRules, "minDigit")
 			}
 
 		case "minSpecialChars":
-			specialCharsErr := 0
-			re := regexp.MustCompile(`[^a-zA-Z0-9]+`)
-
-			subMatchAll := re.FindAllString(bodyRequest.Password, -1)
-			for range subMatchAll {
-				specialCharsErr++
+			specialCharsOk := 0
+			
+			for _, r := range bodyRequest.Password {
+				if ((r > 31) && (r < 48)) || ((r > 57) && (r < 65)) || ((r > 90) && (r < 97)) || ((r > 122) && (r < 126)) {
+					specialCharsOk++
+				}
 			}
 
-			if specialCharsErr < rule.Value {
+			if specialCharsOk < rule.Value {
 				failedRules = append(failedRules, "minSpecialChars")
 			}
 
 		case "noRepeated":
 			noRepeatedErr := 0
 			var lastChar rune
-			for _, r := range bodyRequest.Password{
-				if r == lastChar{
+			for _, r := range bodyRequest.Password {
+				if r == lastChar {
 					noRepeatedErr++
 				}
 				lastChar = r
 			}
 
-			if noRepeatedErr > 0{
+			if noRepeatedErr > 0 {
 				noRepeatedErr++
 			}
 
-			if noRepeatedErr > rule.Value{
+			if noRepeatedErr > rule.Value {
 				failedRules = append(failedRules, "noRepeated")
 			}
 		}
-
 	}
 
 	return
 }
-
-/* func validateRules(rules []interface{}) error {
-
-	for _, rule := range rules {
-		if
-	}
-
-	return nil
-} */
