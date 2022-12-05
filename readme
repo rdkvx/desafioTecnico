@@ -1,7 +1,7 @@
 para rodar a API, basta utilizar o comando "make run" no console e então fazer a requisição pelo postman, insomnia ou outro software
-de preferencia no endereco "localhost:8080/verify".
+de sua preferencia, no endereco "localhost:8080/verify".
 
-Ou se preferir, pode usar o comando "run main.go" caso prefira rodar de forma mais "manual"
+Ou caso preferir, pode usar o comando "go run main.go" caso prefira rodar de forma mais "manual"
 
 Segue um exemplo de payload
 

@@ -12,6 +12,7 @@ import (
 )
 
 func VerifyPassword(c *gin.Context) {
+	// bind the body request to the model
 	bodyRequest := models.ValidatePassword{}
 	if err := c.ShouldBindBodyWith(&bodyRequest, binding.JSON); err != nil {
 		utils.SendJSONError(c, http.StatusBadRequest, fmt.Errorf("%v: %v", utils.FailedtoCheckPassword, err))
