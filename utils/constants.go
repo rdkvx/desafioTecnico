@@ -7,6 +7,7 @@ const(
 	MinDigit = "minDigit"
 	MinSpecialChars = "minSpecialChars"
 	NoRepeated = "noRepeated"
+	SpecialCharacterNotFound = "special character not found"
 
 	FailedtoCheckPassword = "failed to check password"
 

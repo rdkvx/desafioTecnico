@@ -53,12 +53,12 @@ func ValidateMinUppercase(password string, ruleValue int) error {
 }
 
 // check if the total of number caracters is valid based on rule value
-func ValidateMinDigit(password string, ruleValue int) error{
+func ValidateMinDigit(password string, ruleValue int) error {
 	var minDigitOk int
 	var err error
 
 	for _, r := range password {
-		if (r > 47) && (r < 58) {
+		if unicode.IsNumber(r) {
 			minDigitOk++
 		}
 	}
@@ -71,12 +71,12 @@ func ValidateMinDigit(password string, ruleValue int) error{
 }
 
 // check if the total of special caracters is valid based on rule value
-func ValidateMinSpecialChars(password string, ruleValue int) error{
+func ValidateMinSpecialChars(password string, ruleValue int) error {
 	var specialCharsOk int
 	var err error
 
 	for _, r := range password {
-		if ((r > 31) && (r < 48)) || ((r > 57) && (r < 65)) || ((r > 90) && (r < 97)) || ((r > 122) && (r < 126)) {
+		if err = isSpecialRune(r); err == nil {
 			specialCharsOk++
 		}
 	}
@@ -89,7 +89,7 @@ func ValidateMinSpecialChars(password string, ruleValue int) error{
 }
 
 // check if the total of repeated caracters is valid based on rule value
-func ValidateNoRepeated(password string, ruleValue int) error{
+func ValidateNoRepeated(password string, ruleValue int) error {
 	var noRepeatedErr int
 	var lastChar rune
 	var err error
@@ -110,4 +110,12 @@ func ValidateNoRepeated(password string, ruleValue int) error{
 	}
 
 	return err
+}
+
+func isSpecialRune(r rune) error {
+	if ((r > 31) && (r < 48)) || ((r > 57) && (r < 65)) || ((r > 90) && (r < 97)) || ((r > 122) && (r < 126)) {
+		return nil
+	}
+
+	return errors.New(SpecialCharacterNotFound)
 }
