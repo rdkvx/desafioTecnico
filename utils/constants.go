@@ -13,7 +13,6 @@ const(
 
 	HttpPort = ":8080"
 	APIStopped = "server stopped successfully"
-
 )
 
 var(

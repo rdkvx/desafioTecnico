@@ -112,6 +112,7 @@ func ValidateNoRepeated(password string, ruleValue int) error {
 	return err
 }
 
+// validate special character
 func isSpecialRune(r rune) error {
 	if ((r > 31) && (r < 48)) || ((r > 57) && (r < 65)) || ((r > 90) && (r < 97)) || ((r > 122) && (r < 126)) {
 		return nil

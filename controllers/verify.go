@@ -18,11 +18,13 @@ func VerifyPassword(c *gin.Context) {
 	}
 
 	verify := true
+
 	failedRules := services.PasswordValidator.ValidatePassword(bodyRequest)
 	if len(failedRules) > 0 {
 		verify = false
 	}
 
+	// build a response to return
 	response := models.JsonResponse{
 		Verify: verify,
 		NoMatch: failedRules,

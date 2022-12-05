@@ -1,6 +1,6 @@
 package models
 
 type JsonResponse struct {
-	Verify  bool
-	NoMatch []string
+	Verify  bool     `json:"verify"`
+	NoMatch []string `json:"noMatch"`
 }

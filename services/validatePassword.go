@@ -21,6 +21,7 @@ func (vp *Validator) ValidatePassword(bodyRequest models.ValidatePassword) ([]st
 
 	failedRules := []string{}
 
+	// validate every rule that came from the request
 	for _, rule := range bodyRequest.Rules {
 		switch rule.Rule {
 		case utils.MinSize:
