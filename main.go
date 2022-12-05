@@ -22,7 +22,6 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.Default()
-
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
 	}))
@@ -38,10 +37,7 @@ func main() {
 	services.PasswordValidator = services.NewPasswordValidator()
 	
 	fmt.Printf(utils.ApiStartMsg, utils.HttpPort)
-
-	//skip a line
-	fmt.Println()
-
+	
 	// starting API server
 	if err = server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		fmt.Errorf(utils.ApiStartErr, err)

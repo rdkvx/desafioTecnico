@@ -16,7 +16,7 @@ const(
 )
 
 var(
-	ApiStartMsg = "API listening on port %s"
+	ApiStartMsg = "API listening on port %s \n"
 	ApiStartErr = "failed to start server: %v"
 	ApiForcedShutdown = "server forced to shutdown: %s"
 )
