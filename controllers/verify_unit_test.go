@@ -22,7 +22,7 @@ func TestVerifyPassword(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	t.Run("failed to check password", func(t *testing.T) {
-		expectMsgErr := string("{\"Verify\":false,\"NoMatch\":[\"minSize\"]}")
+		expectMsgErr := string("{\"verify\":false,\"noMatch\":[\"minSize\"]}")
 
 		w := httptest.NewRecorder()
 		c, router := gin.CreateTestContext(w)
@@ -53,7 +53,7 @@ func TestVerifyPassword(t *testing.T) {
 	})
 
 	t.Run("success!", func(t *testing.T) {
-		expectMsgErr := string("{\"Verify\":true,\"NoMatch\":[]}")
+		expectMsgErr := string("{\"verify\":true,\"noMatch\":[]}")
 
 		w := httptest.NewRecorder()
 		c, router := gin.CreateTestContext(w)
