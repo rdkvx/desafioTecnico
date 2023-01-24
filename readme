@@ -29,5 +29,6 @@ Segue um exemplo de payload
     ]
 }
 
+
 Mesmo não sendo obrigatório, decidi deixar o parametro value configurável para a regra "noRepeated", 
 caso queira o valor padrão (nenhum caracter repetido em sequencia), basta deixar o valor como 0, porém ele irá respeitar a regra imposta caso o valor seja alterado.
