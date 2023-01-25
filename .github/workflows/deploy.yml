@@ -24,4 +24,3 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         TARGET: ${{secrets.TARGET_DIR}}
         EXCLUDE: "**.env"
-      
