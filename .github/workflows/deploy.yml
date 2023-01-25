@@ -8,13 +8,16 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
+    - name: Adding Known Hosts
+      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
     - name: Checkout the files
       uses: actions/checkout@v3
 
     - name: Copy files with SSH
       uses: easingthemes/ssh-deploy@main
       env:
-        SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
+        #SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
         ARGS: "-rltgoDzvO --delete"
         SOURCE: "./"
         REMOTE_HOST: ${{secrets.REMOTE_HOST}}
@@ -24,3 +27,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         TARGET: ${{secrets.TARGET_DIR}}
         EXCLUDE: "**.env"
+      with:
+        key: ${{secrets.EC2_SSH_KEY}}
+        known_hosts: 'replace'
