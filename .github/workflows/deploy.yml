@@ -8,9 +8,6 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
-    - name: Adding Known Hosts
-      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
     - name: Checkout the files
       uses: actions/checkout@v3
 
