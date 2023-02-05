@@ -21,7 +21,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: password-validator
           environment_name: Passwordvalidator-env
-          version_label: 44
+          version_label: 123456789
           existing_bucket_name: elasticbeanstalk-us-east-1-188936252183
           region: us-east-1
           deployment_package: deploy.zip
